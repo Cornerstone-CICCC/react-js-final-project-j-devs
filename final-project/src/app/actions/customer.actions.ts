@@ -51,7 +51,7 @@ async function getCustomerById (id: string) {
 // Add Customer - sign up
 async function addCustomer (formData: FormData) {
   try {
-    const firstname = formData.getAll("firstname")
+    const firstname = formData.get("firstname") as string
     const lastname = formData.get("lastname") as string
     const age = formData.get("age")
     const email = formData.get("email") as string
@@ -76,14 +76,14 @@ async function addCustomer (formData: FormData) {
 
     // Add redirection to login or shop webpage
   } catch (err) {
-
+    console.error(err)
   }
 }
 
 // Delete Customer
 async function deleteCustomer(id: string) {
   await connectDB()
-  const customer = await Customer.findByIdAndDelete(id)
+  await Customer.findByIdAndDelete(id)
   revalidatePath("/customer")
 }
 
