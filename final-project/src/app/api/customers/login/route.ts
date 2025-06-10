@@ -2,6 +2,7 @@ import { connectDB } from "@/lib/mongodb"
 import Customer from "@/models/Customer"
 import { NextResponse } from "next/server"
 import bcrypt from 'bcrypt'
+import { cookies } from "next/headers"
 
 export async function POST(req: Request) {
   const { email, password } = await req.json()
@@ -18,5 +19,18 @@ export async function POST(req: Request) {
   if (!correctPassword) {
     return NextResponse.json({error: "Wrong account information"})
   }
+
+  const cookieStore = await cookies()
+  cookieStore.set("email", email, {
+    httpOnly: true,
+    secure: true,
+    path: '/'
+  })
+  cookieStore.set("password", password, {
+    httpOnly: true,
+    secure: true,
+    path: '/'
+  })
+
   return NextResponse.json({logged: "Successfull"})
 }
