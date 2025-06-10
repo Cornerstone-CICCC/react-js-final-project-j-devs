@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/footer";"../components/footer";
 
 
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Toaster />
         {children}
         {modal}
         <Footer />
