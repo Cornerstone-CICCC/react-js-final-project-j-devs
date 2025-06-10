@@ -21,6 +21,9 @@ function Header(){
                     <li>
                         <a href="/about">AboutUs</a>
                     </li>
+                                        <li>
+                        <a href="/contact">ContactUs</a>
+                    </li>
                     <li>
                         <a href="https://maps.app.goo.gl/Pfi1vjkxSTW19JQY8" target='_blank'>Location</a>
                     </li>
