@@ -84,6 +84,11 @@ async function addProduct(formData: FormData) {
   }
 } 
 
+// Update Product
+async function updatedProdById (id: string) {
+
+}
+
 // Delete Product
 async function deleteProduct (id: string) {
   await connectDB()
@@ -96,5 +101,6 @@ export default {
   getAllProducts,
   addProduct,
   getProductById,
+  updatedProdById,
   deleteProduct
 }

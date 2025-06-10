@@ -19,8 +19,8 @@ export async function POST(req: Request) {
   if (!correctPassword) {
     return NextResponse.json({error: "Wrong account information"})
   }
-
   const cookieStore = await cookies()
+  
   cookieStore.set("email", email, {
     httpOnly: true,
     secure: true,
@@ -31,6 +31,16 @@ export async function POST(req: Request) {
     secure: true,
     path: '/'
   })
-
+  
+  // check for admin
+  if (email === process.env.ADMIN_EMAIL) {
+    cookieStore.set("admin", "true", {
+      httpOnly: true,
+      secure: true,
+      path: '/',
+      expires: 60 * 60
+    }) 
+  }
+  
   return NextResponse.json({logged: "Successfull"})
 }

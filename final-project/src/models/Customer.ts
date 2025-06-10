@@ -6,7 +6,7 @@ const CustomerSchema  = new mongoose.Schema({
   age: { type: Number, require: true },
   email: { type: String, require: true },
   password: { type: String, require: true },
-  role: { type: String, require: false, default: "customer" }
+  role: { type: String, require: true, default: "customer" }
 })
 
 export default mongoose.models.Customer || mongoose.model("Customer", CustomerSchema)
