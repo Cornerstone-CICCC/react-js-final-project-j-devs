@@ -1,6 +1,8 @@
 import '@/styles/components/header.css';
 
-function Header(){
+import Link from 'next/link';
+
+function LoginHeader(){
     return(
         <>
         {/*Banner */}
@@ -13,19 +15,19 @@ function Header(){
                 {/*menu */}
                 <ul className='menu flex flex-col space-y-2 items-start sm:items-center sm:text-[22px] md:flex-row md:space-y-0 md:space-x-6 md:items-center md:text-[24px]'>
                     <li className='logo-name'>
-                        <a href="/">YVR District</a>
+                        <Link href="/">YVR District</Link>
                     </li>
                     <li className='font-semibold'>
-                        <a href="/products">Products</a>
+                        <Link href="/products">Products</Link>
                     </li>
                     <li>
-                        <a href="/about">AboutUs</a>
+                        <Link href="#aboutPage">AboutUs</Link>
                     </li>
                     <li>
-                        <a href="/contact">ContactUs</a>
+                        <Link href="/contact">ContactUs</Link>
                     </li>
                     <li>
-                        <a href="https://maps.app.goo.gl/Pfi1vjkxSTW19JQY8" target='_blank'>Location</a>
+                        <Link href="https://maps.app.goo.gl/Pfi1vjkxSTW19JQY8" target='_blank'>Location</Link>
                     </li>
                 </ul>
 
@@ -68,10 +70,7 @@ function Header(){
                     </form>
                     </li>
                     <li>
-                        <a href="/login">Login</a>
-                    </li>
-                    <li>
-                        <a href="/signup">Signup</a>
+                        <Link href="/">Logout</Link>
                     </li>
                 </ul>
             </div>
@@ -80,4 +79,4 @@ function Header(){
     );
 }
 
-export default Header
+export default LoginHeader
