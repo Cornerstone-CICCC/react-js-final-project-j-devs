@@ -3,6 +3,7 @@
 import { connectDB } from "@/lib/mongodb"
 import { UploadImage } from "@/lib/upload-image"
 import Product from "@/models/Product"
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   await connectDB()
@@ -40,4 +41,22 @@ export async function POST(req: Request) {
     console.error("Error in POST /api/products:", err)
     return new Response("Something went wrong", { status: 500 })
   }
+}
+
+
+
+export async function POST(req: Request) {
+  const { name, price, description, size, image, stock, category } = await req.json()
+  if (!name || !price || !description || !size || !image || !stock || !category) {
+    return NextResponse.json({error: "Please complete all input fields"}, {status: 400})
+  }
+
+  await connectDB()
+  const foundProd = await Product.exists({ name, description })
+  if (foundProd) {
+    return NextResponse.json({error: "Product already in-store"}, {status: 409})
+  }
+
+  const product = await Product.create({ name, price, description, size, image, stock, category })
+  return NextResponse.json(product)
 }

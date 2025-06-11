@@ -54,7 +54,6 @@ async function getProductById(id: string) {
 }
 
 // Add product
-"use server";
 
 
 
@@ -82,6 +81,8 @@ export async function addProduct(formData: FormData) {
 
     const uploadResult: any = await UploadImage(image, "products");
 
+
+
     await Product.create({
       name,
       price,
@@ -101,10 +102,16 @@ export async function addProduct(formData: FormData) {
 }
 
 
+
+// Update Product
+async function updatedProdById (id: string) {
+
+}
+
 // Delete Product
 async function deleteProduct (id: string) {
   await connectDB()
-  const product = await Product.findByIdAndDelete(id)
+  await Product.findByIdAndDelete(id)
   revalidatePath("/products")
 }
 
@@ -113,5 +120,6 @@ export default {
   getAllProducts,
   addProduct,
   getProductById,
+  updatedProdById,
   deleteProduct
 }
