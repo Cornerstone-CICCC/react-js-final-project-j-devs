@@ -8,7 +8,7 @@ function Login(){
             <div className="flex justify-center items-center min-h-screen bg-[#204969]">
                 <section className="flex flex-col items-center w-full max-w-5xl bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-[#dadada]">
 
-                <div className="w-full md:w-full">
+                <div className="w-full md:w-full lg:w-full p-5">
                 <img
                     className="object-cover w-full rounded-t-lg md:h-auto md:w-full md:rounded-none md:rounded-s-lg"
                     src="/images/about.png"
@@ -22,7 +22,7 @@ function Login(){
                     {/*Email */}
                     <div>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-500 dark:placeholder-gray-400 dark:text-[#204969]" placeholder="name@company.com" required />
+                        <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-500 dark:placeholder-gray-400 dark:text-[#204969]" placeholder="email@example.com" required />
                     </div>
 
                     {/*Password */}

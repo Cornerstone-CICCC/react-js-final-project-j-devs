@@ -8,7 +8,7 @@ function Signup(){
             <div className="flex justify-center items-center min-h-screen bg-[#204969]">
                 <section className="flex flex-col items-center w-full max-w-5xl bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-[#dadada]">
 
-                <div className="w-full md:w-full">
+                <div className="w-full md:w-full lg:w-full p-5">
                 <img
                     className="object-cover w-full rounded-t-lg md:h-auto md:w-full md:rounded-none md:rounded-s-lg"
                     src="/images/about.png"
@@ -23,15 +23,19 @@ function Signup(){
                     {/*First Name */}
                     <div>
                         <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-                        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
+                        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your first name" required />
                     </div>
 
                     {/*Last Name */}
+                    <div>
+                        <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
+                        <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your last name" required />
+                    </div>
 
                     {/*Email */}
                     <div>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-500 dark:placeholder-gray-400 dark:text-[#204969]" placeholder="name@company.com" required />
+                        <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-500 dark:placeholder-gray-400 dark:text-[#204969]" placeholder="email@example.com" required />
                     </div>
 
                     {/*Password */}
@@ -39,6 +43,12 @@ function Signup(){
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
                         <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-500 dark:placeholder-gray-400 dark:text-[#204969]" required />
                      </div>
+
+                    {/*Confirm Password */}
+                    <div className="mb-6">
+                        <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+                        <input type="password" id="confirm_password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
+                    </div> 
 
                      {/*Data recover */}
                     <div className="flex items-start">
@@ -51,13 +61,13 @@ function Signup(){
                     </div>
 
                     <button type="submit" className="flex justify-center w-1/2 text-[#204969] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#08ffc8] dark:hover:bg-[#dadada] dark:focus:ring-blue-800">
-                        Login to your account
+                        Sign up to your account
                     </button>
 
                      <div className="text-sm font-medium text-gray-500 dark:text-[#08ffc8]">
-                            Not registered? 
-                            <a href="/signup" className="text-blue-700 hover:underline dark:text-[#fff7f7]">
-                                Create your account now!
+                            Already registered? 
+                            <a href="/login" className="text-blue-700 hover:underline dark:text-[#fff7f7]">
+                                Go to your account!
                             </a>
                         </div>
                     </form>
