@@ -1,6 +1,6 @@
 import LoginHeader from "@/components/LoginHeader";
 
-function Login(){
+function Signup(){
     return(
         <>
             <LoginHeader />
@@ -18,7 +18,16 @@ function Login(){
 
                 <div className="w-full md:w-full p-4 bg-white border-t md:border-t-0 md:border-l border-gray-200 rounded-b-lg md:rounded-none md:rounded-e-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
                     <form action="#" className="space-y-6">
-                    <h5 className="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
+                    <h5 className="text-xl font-medium text-gray-900 dark:text-white">Join our Community!</h5>
+
+                    {/*First Name */}
+                    <div>
+                        <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
+                        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
+                    </div>
+
+                    {/*Last Name */}
+
                     {/*Email */}
                     <div>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
@@ -60,4 +69,4 @@ function Login(){
     );
 }
 
-export default Login
+export default Signup
