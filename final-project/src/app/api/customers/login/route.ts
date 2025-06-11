@@ -3,6 +3,7 @@ import Customer from "@/models/Customer"
 import { NextResponse } from "next/server"
 import bcrypt from 'bcrypt'
 import { cookies } from "next/headers"
+import jwt from "jsonwebtoken"
 
 export async function POST(req: Request) {
   const { email, password } = await req.json()
@@ -16,17 +17,12 @@ export async function POST(req: Request) {
     return NextResponse.json({error: "Wrong account information"}, {status: 400})
   }
   const correctPassword = await bcrypt.compare(password, foundCustomer.password)
-  if (!correctPassword) {
+  if (!correctPassword) { 
     return NextResponse.json({error: "Wrong account information"})
   }
   const cookieStore = await cookies()
   
-  cookieStore.set("email", email, {
-    httpOnly: true,
-    secure: true,
-    path: '/'
-  })
-  cookieStore.set("password", password, {
+  cookieStore.set("logged", foundCustomer._id, {
     httpOnly: true,
     secure: true,
     path: '/'
@@ -38,7 +34,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       secure: true,
       path: '/',
-      expires: 60 * 60
+      // expires: 60 * 60
     }) 
   }
   
