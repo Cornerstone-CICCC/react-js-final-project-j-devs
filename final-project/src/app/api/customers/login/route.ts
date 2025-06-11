@@ -3,7 +3,6 @@ import Customer from "@/models/Customer"
 import { NextResponse } from "next/server"
 import bcrypt from 'bcrypt'
 import { cookies } from "next/headers"
-import jwt from "jsonwebtoken"
 
 export async function POST(req: Request) {
   const { email, password } = await req.json()
