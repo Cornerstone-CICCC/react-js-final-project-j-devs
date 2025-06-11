@@ -92,8 +92,6 @@ const handleAddToCart = () => {
     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
   />
 </div>
-
-
         <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
         <p className="text-xl text-gray-700 mb-2">${product.price.toFixed(2)}</p>
         <p className="text-base font-medium text-gray-800 mb-1">{description}</p>

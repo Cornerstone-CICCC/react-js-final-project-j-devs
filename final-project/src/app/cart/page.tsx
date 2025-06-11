@@ -8,104 +8,170 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function CartPage() {
-  const { cart, removeFromCart, clearCart } = useCartStore();
+  const { cart, removeFromCart, clearCart, addToCart } = useCartStore();
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const status = searchParams.get('status');
 
-  // 🔹 Calcular el total
-  const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const total = cart.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
 
-  // 🔹 Función simulada de checkout
-  const handleCheckout = () => {
-    router.push('/cart?status=success');
+  const handleCheckout = async () => {
+    if (cart.length === 0) return;
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cart }),
+      });
+      const { url } = await res.json();
+      window.location.assign(url);
+    } catch (err) {
+      console.error(err);
+      toast.error('Error al iniciar Stripe Checkout.');
+    }
   };
 
-  useEffect(() => {
-    if (status === 'success') {
-      toast.success('Purchase completed successfully!');
-      router.replace('/cart'); // limpia la URL
-    }
-    if (status === 'cancel') {
-      toast.error('Purchase was cancelled.');
-      router.replace('/cart'); // limpia la URL
-    }
-  }, [status, router]);
-
-  return (
-    <section className="max-w-4xl mx-auto p-6 min-h-screen bg-white text-black">
+return (
+  <div className="bg-white min-h-screen text-black px-4 sm:px-0">
+    <section className="max-w-4xl mx-auto p-6">
       <Toaster position="bottom-center" />
-      <h1 className="text-3xl font-bold mb-6 text-center">Shopping Cart</h1>
+
+      {/* Título */}
+      <h1 className="text-4xl sm:text-5xl font-bold mb-8 text-center">
+        Shopping Cart
+      </h1>
 
       {cart.length === 0 ? (
-        <p className="text-center text-gray-600">Your cart is empty.</p>
+        <p className="text-center text-gray-600 text-xl sm:text-2xl mb-8">
+          Your cart is empty.
+        </p>
       ) : (
         <>
-  <ul className="space-y-6">
-  {cart.map((item, index) => (
-    <li
-      key={`${item.product.id}-${item.size}-${index}`}
-      className="flex items-center justify-between border-b pb-4"
-    >
-      {/* Contenedor flex principal */}
-      <div className="flex items-center gap-4">
-        {/* Wrapper de la imagen */}
-    <div className="relative flex-shrink-0 w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 overflow-hidden rounded-lg">
-  <Image
-    src={item.product.image}
-    alt={item.product.name}
-    fill
-    className="object-cover transition-transform duration-300 hover:scale-110"
-  />
-</div>
-        {/* Detalles del producto */}
-        <div>
-          <h2 className="font-semibold text-lg">{item.product.name}</h2>
-          <p className="text-sm text-gray-600">Size: {item.size}</p>
-          <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
-          <p className="text-sm text-gray-600">
-            Price: ${(item.product.price * item.quantity).toFixed(2)}
-          </p>
-        </div>
-      </div>
-
-      {/* Botón de Remove (o cualquier otro botón) */}
-      <button
-        onClick={() => removeFromCart(item.product.id, item.size)}
-        className="text-red-500 hover:text-red-700 font-semibold"
-      >
-        Remove
-      </button>
-    </li>
-  ))}
-</ul>
-
-          <div className="mt-8 border-t pt-4 flex flex-col items-end gap-4">
-            <p className="text-xl font-bold">Total: ${total.toFixed(2)}</p>
-
-            <div className="flex gap-4">
-              <button
-                onClick={clearCart}
-                className="px-4 py-2 border border-gray-400 rounded hover:bg-gray-100"
+          <ul className="space-y-6">
+            {cart.map((item, index) => (
+              <li
+                key={`${item.product.id}-${item.size}-${index}`}
+                className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4"
               >
-                Clear Cart
-              </button>
-              <button
-                onClick={handleCheckout}
-                className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800"
-              >
-                Checkout
-              </button>
-            </div>
+                {/* Imagen */}
+                <div className="flex-shrink-0 mb-4 sm:mb-0">
+                  <div className="relative w-full h-64 sm:w-40 sm:h-40 overflow-hidden rounded-lg">
+                    <Image
+                      src={item.product.image}
+                      alt={item.product.name}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-110"
+                    />
+                  </div>
+                </div>
 
-            <Link href="/" className="text-sm text-blue-500 underline">
-              Continue Shopping
-            </Link>
+                {/* Detalles */}
+                <div className="flex-1 mb-4 sm:mb-0 sm:mx-4">
+                  <h2 className="font-semibold text-lg sm:text-xl">
+                    {item.product.name}
+                  </h2>
+                  <p className="text-sm text-gray-600">Size: {item.size}</p>
+                  <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                  <p className="text-sm text-gray-600">
+                    Price: ${(item.product.price * item.quantity).toFixed(2)}
+                  </p>
+                </div>
+
+                {/* Controles: cantidad + eliminar */}
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => {
+                        useCartStore.setState((state) => {
+                          const c = [...state.cart];
+                          const i = c.findIndex(
+                            (x) =>
+                              x.product.id === item.product.id &&
+                              x.size === item.size
+                          );
+                          if (i === -1) return {};
+                          if (c[i].quantity === 1) c.splice(i, 1);
+                          else c[i].quantity--;
+                          return { cart: c };
+                        });
+                        toast.success(
+                          `${item.product.name} quantity decreased`,
+                          { icon: '❌' }
+                        );
+                      }}
+                      className="px-2 py-1 border rounded-md text-lg hover:bg-gray-100"
+                    >
+                      –
+                    </button>
+                    <span className="min-w-[2rem] text-center">
+                      {item.quantity}
+                    </span>
+                    <button
+                      onClick={() => {
+                        addToCart(item.product, item.size);
+                        toast.success(
+                          `${item.product.name} quantity increased`,
+                    
+                        );
+                      }}
+                      className="px-2 py-1 border rounded-md text-lg hover:bg-gray-100"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => {
+                      removeFromCart(item.product.id, item.size);
+                      toast.success(`${item.product.name} removed`, {
+                        icon: '❌',
+                      });
+                    }}
+                    className="px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-500 hover:text-white transition"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* Clear & Checkout */}
+          <div className="mt-8 flex flex-col sm:flex-row justify-end items-center gap-4">
+            <button
+              onClick={() => {
+                clearCart();
+                toast.success('Cart cleared', { icon: '❌' });
+              }}
+              className="w-full sm:w-auto px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-200 transition"
+            >
+              Clear Cart
+            </button>
+            <button
+              onClick={handleCheckout}
+              className="w-full sm:w-auto px-6 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition"
+            >
+              Checkout
+            </button>
           </div>
         </>
       )}
-    </section>
-  );
-}
 
+      {/* Continue Shopping */}
+      <div className="mt-12 text-center">
+        <Link
+          href="/products"
+          className="inline-block px-6 py-3 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition"
+        >
+          Continue Shopping
+        </Link>
+      </div>
+    </section>
+  </div>
+);
+
+
+}
