@@ -14,14 +14,15 @@ export async function GET() {
       lastname: cust.lastname,
       age: cust.age,
       email: cust.email,
-      password: cust.password
+      password: cust.password,
+      role: cust.role
     }))
   )
 }
 
 // Create customer - sign up
 export async function POST(req: Request) {
-  const { firstname, lastname, age, email, password } = await req.json()
+  const { firstname, lastname, age, email, password, role } = await req.json()
   if (!firstname || !lastname || !age || !email || !password) {
     return NextResponse.json({error: "Please complete all input fields"}, {status: 400})
   }
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
   }
   
   const hashedPassword = await bcrypt.hash(password, 12)
-  const customer = await Customer.create({ firstname, lastname, age, email, password: hashedPassword })
+  const customer = await Customer.create({ firstname, lastname, age, email, password: hashedPassword, role })
+  console.log(customer)
   return NextResponse.json(customer)
 }

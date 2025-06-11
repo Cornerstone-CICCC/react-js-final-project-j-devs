@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/mongodb"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import Product from "@/models/Product"
+import toast from "react-hot-toast"
 
 export interface ProductType {
   _id: string
@@ -52,13 +53,46 @@ async function getProductById(id: string) {
 
 // Add product
 async function addProduct(formData: FormData) {
-  
+  try {
+    const name = formData.get("name") as string
+    const price = formData.get("price") 
+    const description = formData.get("description") as string
+    const size = formData.get("size")
+    const image = formData.get("image") as string
+    const stock = formData.get("stock") 
+    const category = formData.get("category") as string
+
+    await connectDB()
+    const foundProd = await Product.exists({ name, description })
+    if (foundProd) {
+      toast.error("Product already in-store")
+      return
+    }
+
+    await Product.create({
+      name,
+      price,
+      description,
+      size,
+      image,
+      stock,
+      category
+    })
+    toast.success("Added new Product")
+  } catch (err) {
+    console.error(err)
+  }
 } 
+
+// Update Product
+async function updatedProdById (id: string) {
+
+}
 
 // Delete Product
 async function deleteProduct (id: string) {
   await connectDB()
-  const product = await Product.findByIdAndDelete(id)
+  await Product.findByIdAndDelete(id)
   revalidatePath("/products")
 }
 
@@ -67,5 +101,6 @@ export default {
   getAllProducts,
   addProduct,
   getProductById,
+  updatedProdById,
   deleteProduct
 }

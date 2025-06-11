@@ -13,6 +13,7 @@ export interface CustomerType {
   age: number
   email: string
   password: string
+  role: string
 }
 
 // Get All Customers
@@ -27,7 +28,8 @@ async function getAllCustomers () {
     lastname: cust.lastname,
     age: cust.age,
     email: cust.email,
-    password: cust.password
+    password: cust.password,
+    role: cust.role
   }))
 }
 
@@ -44,18 +46,20 @@ async function getCustomerById (id: string) {
     lastname: customer.lastname,
     age: customer.age,
     email: customer.email,
-    password: customer.password
+    password: customer.password,
+    role: customer.role
   }
 }
 
 // Add Customer - sign up
 async function addCustomer (formData: FormData) {
   try {
-    const firstname = formData.getAll("firstname")
+    const firstname = formData.get("firstname") as string
     const lastname = formData.get("lastname") as string
     const age = formData.get("age")
     const email = formData.get("email") as string
     const password = formData.get("password") as string
+    const role = "customer"
 
     await connectDB()
     const foundCustomer = await Customer.exists({ email })
@@ -70,20 +74,22 @@ async function addCustomer (formData: FormData) {
       lastname,
       age,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      role
     })
     toast.success("Sign up successfull")
 
     // Add redirection to login or shop webpage
+    revalidatePath("/")
   } catch (err) {
-
+    console.error(err)
   }
 }
 
 // Delete Customer
 async function deleteCustomer(id: string) {
   await connectDB()
-  const customer = await Customer.findByIdAndDelete(id)
+  await Customer.findByIdAndDelete(id)
   revalidatePath("/customer")
 }
 
