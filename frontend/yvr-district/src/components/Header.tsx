@@ -4,14 +4,14 @@ function Header(){
     return(
         <>
         {/*Banner */}
-        <div className='font-averia banner bg-white text-black flex justify-center text-[24px]'>
+        <div className='font-averia banner bg-white text-black flex justify-center text-[24px] sm:text-[22px]'>
             <p>Summer Season Coming Soon!!! Pre-order NOW!! </p>
         </div>
         {/*Navbar */}
         <nav className='bg-gray-500' aria-label='Main navigation menu'>
-            <div className='navbar-container bg-gray-500 flex justify-between px-6 py-2'>
+            <div className='navbar-container bg-gray-500 flex flex-col sm:flex-col sm:justify-between px-4 sm:px-6 py-2 w-full'>
                 {/*menu */}
-                <ul className='menu flex space-x-6 items-center'>
+                <ul className='menu flex flex-col space-y-2 items-start sm:items-center sm:text-[22px]'>
                     <li className='logo-name'>
                         <a href="/">YVR District</a>
                     </li>
@@ -21,7 +21,7 @@ function Header(){
                     <li>
                         <a href="/about">AboutUs</a>
                     </li>
-                                        <li>
+                    <li>
                         <a href="/contact">ContactUs</a>
                     </li>
                     <li>
@@ -30,7 +30,8 @@ function Header(){
                 </ul>
 
                 {/*menu2 */}
-                <ul className='menu2 flex space-x-6 items-center'>
+                <ul className='menu2 flex flex-col space-y-2 items-start sm:items-center mt-4 sm:mt-0'>
+                    <li>
                     <form className='flex items-center w-full max-w-xs relative'>
                         <label htmlFor="default-search" className='sr-only'>Search</label>
                         <div className='relative w-full'>
@@ -65,6 +66,7 @@ function Header(){
                             </button>
                         </div>
                     </form>
+                    </li>
                     <li>
                         <a href="/login">Login</a>
                     </li>
