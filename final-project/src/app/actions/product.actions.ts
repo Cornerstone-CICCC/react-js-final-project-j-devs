@@ -3,6 +3,9 @@ import { connectDB } from "@/lib/mongodb"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import Product from "@/models/Product"
+import toast from "react-hot-toast"
+import { UploadImage } from "@/lib/upload-image";
+
 
 export interface ProductType {
   _id: string
@@ -51,9 +54,52 @@ async function getProductById(id: string) {
 }
 
 // Add product
-async function addProduct(formData: FormData) {
-  
-} 
+"use server";
+
+
+
+export async function addProduct(formData: FormData) {
+  try {
+    const name = formData.get("name") as string;
+    const price = parseFloat(formData.get("price") as string);
+    const description = formData.get("description") as string;
+    const rawSizes = formData.getAll("size"); // checkbox or multiple
+    const size = Array.isArray(rawSizes) ? rawSizes.map(String) : [String(rawSizes)];
+    const image = formData.get("image") as File;
+    const stock = parseInt(formData.get("stock") as string);
+    const category = formData.get("category") as string;
+
+    if (!image || !image.size) {
+      throw new Error("Image is required.");
+    }
+
+    await connectDB();
+
+    const existing = await Product.exists({ name, description });
+    if (existing) {
+      throw new Error("Product already exists.");
+    }
+
+    const uploadResult: any = await UploadImage(image, "products");
+
+    await Product.create({
+      name,
+      price,
+      description,
+      size,
+      image: uploadResult.secure_url,
+      stock,
+      category,
+    });
+
+    revalidatePath("/products");
+
+  } catch (err) {
+    console.error("Failed to add product:", err);
+    throw err; // Handle in client with toast or error boundary
+  }
+}
+
 
 // Delete Product
 async function deleteProduct (id: string) {
