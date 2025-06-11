@@ -3,7 +3,7 @@ import '@/styles/components/about.css';
 function About(){
     return(
         <>
-        <div className="bg-white">
+        <div id='aboutPage' className="bg-white">
             <div className="about-title text-[50px] bg-gradient-to-t from-[#e1ae78] to-[#412a20] py-6">
                 <h2 className="text-white text-center font-bold">Our Story
                 </h2>

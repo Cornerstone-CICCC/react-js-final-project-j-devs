@@ -2,7 +2,7 @@ import '@/styles/components/header.css';
 
 import Link from 'next/link';
 
-function Header(){
+function LoginHeader(){
     return(
         <>
         {/*Banner */}
@@ -70,10 +70,7 @@ function Header(){
                     </form>
                     </li>
                     <li>
-                        <Link href="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link href="/signup">Signup</Link>
+                        <Link href="/logout">Logout</Link>
                     </li>
                 </ul>
             </div>
@@ -82,4 +79,4 @@ function Header(){
     );
 }
 
-export default Header
+export default LoginHeader

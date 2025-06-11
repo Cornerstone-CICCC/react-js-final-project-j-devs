@@ -67,6 +67,12 @@ function NewArrivals(){
                         </div>
                     ))}
                 </div>
+
+                <div className='flex justify-center items-center'>
+                    <button className="border border-x-4 border-black text-black rounded-full hover:bg-[#e1ae78] hover:text-black font-semibold py-2 px-4 text-[18px] m-4">
+                        <a href="/products">See All</a>
+                    </button>
+                </div>
             </div>
 
             {/*Subscribe for new arrivals */}
