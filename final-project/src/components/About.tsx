@@ -14,7 +14,7 @@ function About(){
                 <div className="flex flex-col max-w-xl">
                     <p className='text-[35px] font-semibold mb-2'>Who we are?</p>
                     <p className="text-gray-700">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores optio deleniti perspiciatis nihil. Voluptatibus ipsum quam ab cupiditate nostrum perferendis, dolorem odio, aliquid a esse numquam vero quibusdam assumenda id.
+                        YVR District fuses Vancouver street energy with bold, sustainable designs for comfortable, everyday wear. Join us and express your urban edge.
                     </p>
                 </div>
 
