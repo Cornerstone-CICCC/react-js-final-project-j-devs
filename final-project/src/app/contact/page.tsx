@@ -1,11 +1,32 @@
+'use client';
+
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import Header from "@/components/Header";
 
+
 function Contact(){
-    return(
+    const form = useRef(null);
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs.
+        sendForm('service_s9mt8is', 'template_b95bqgn', form.current, 'DtaEIUUoMeQM2Joqm')
+      .then(
+        () => {
+        alert("Message sent!");
+      }, (error) => {
+        console.error(error.text);
+        alert("Something went wrong.");
+      });
+    }
+return(
         <>
             <Header />
             <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-[#978d58] via-[#eae1e1] to-[#0b5269]">
                 <section className="flex items-center w-full max-w-3xl bg-transparent border-black border-8 rounded-2xl shadow-sm md:flex-row">
+                <form ref={form} onSubmit={sendEmail} className="mx-auto max-w-screen-xl text-center py-24">
+                
                 <div className=" mx-auto max-w-screen-xl text-center py-24">
                     <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl">Contact Us</h1>
                     <p className="mb-8 text-lg font-normal ">We are here for you. Let's talk!!</p>
@@ -31,10 +52,11 @@ function Contact(){
                     </div>
 
                     {/*Button */}
-                    <button type="submit" className="flex justify-center mt-5 w-full text-[#03051e] bg-[#978d58] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-[#0b5269] dark:hover:text-[#eae1e1]">
+                    <button type="submit" value="Send" className="flex justify-center mt-5 w-full text-[#03051e] bg-[#978d58] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-[#0b5269] dark:hover:text-[#eae1e1]">
                         Sign up to your account
                     </button>
                 </div>
+                </form>
                 </section>
             </div>
         </>
