@@ -5,6 +5,11 @@ import { redirect } from "next/navigation"
 import Product from "@/models/Product"
 import toast from "react-hot-toast"
 import { UploadImage } from "@/lib/upload-image";
+import { isValidObjectId } from "mongoose"; // Add this at the top
+
+
+
+
 
 
 export interface ProductType {
@@ -36,22 +41,29 @@ async function getAllProducts() {
 }
 
 //Get Single Product
+
 async function getProductById(id: string) {
-  await connectDB()
-  const product = await Product.findById(id)
-  if (!product) return null
+  await connectDB();
+
+  if (!isValidObjectId(id)) return null;
+
+  const product = await Product.findById(id);
+  if (!product) return null;
 
   return {
     _id: product._id.toString(),
     name: product.name,
     price: product.price,
+    material: product.material, // <-- Add this
+
     description: product.description,
     size: product.size,
     image: product.image,
     stock: product.stock,
-    category: product.category
-  }
+    category: product.category,
+  };
 }
+
 
 // Add product
 
