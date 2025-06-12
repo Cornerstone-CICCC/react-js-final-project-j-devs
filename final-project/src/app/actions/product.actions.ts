@@ -57,7 +57,7 @@ async function getProductById(id: string) {
 
 
 
-export async function addProduct(formData: FormData) {
+async function addProduct(formData: FormData) {
   try {
     const name = formData.get("name") as string;
     const price = parseFloat(formData.get("price") as string);
@@ -80,8 +80,6 @@ export async function addProduct(formData: FormData) {
     }
 
     const uploadResult: any = await UploadImage(image, "products");
-
-
 
     await Product.create({
       name,
@@ -116,7 +114,7 @@ async function deleteProduct (id: string) {
 }
 
 
-export default { 
+export  { 
   getAllProducts,
   addProduct,
   getProductById,
