@@ -27,7 +27,7 @@ return(
                 <section className="flex items-center w-full max-w-3xl bg-transparent border-black border-8 rounded-2xl shadow-sm md:flex-row">
                 <form ref={form} onSubmit={sendEmail} className="mx-auto max-w-screen-xl text-center py-24">
                 
-                <div className=" mx-auto max-w-screen-xl text-center py-24">
+                <div className=" mx-auto max-w-screen-xl text-center py-24 text-black">
                     <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl">Contact Us</h1>
                     <p className="mb-8 text-lg font-normal ">We are here for you. Let's talk!!</p>
 
