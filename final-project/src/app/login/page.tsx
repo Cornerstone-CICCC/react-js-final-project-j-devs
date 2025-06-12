@@ -1,5 +1,7 @@
 import LoginHeader from "@/components/LoginHeader";
 
+import Link from 'next/link';
+
 function Login(){
     return(
         <>
@@ -47,9 +49,9 @@ function Login(){
 
                      <div className="text-sm font-medium text-gray-500 dark:text-[#08ffc8]">
                             Not registered? 
-                            <a href="/signup" className="text-blue-700 hover:underline dark:text-[#fff7f7]">
+                            <Link href="/signup" className="text-blue-700 hover:underline dark:text-[#fff7f7]">
                                 Create your account now!
-                            </a>
+                            </Link>
                         </div>
                     </form>
                 </div>
