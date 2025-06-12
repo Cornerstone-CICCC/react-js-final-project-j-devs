@@ -3,7 +3,7 @@
 import { Product } from '@/types';
 
 export const products: Product[] = [
-  // Women
+ 
   {
     id: '1',
     name: 'Cropped Jacket',
@@ -26,19 +26,19 @@ export const products: Product[] = [
     image: '/product3.jpg',
   },
 
-  // Men
+  
   {
     id: '4',
     name: 'Black Cargo Pants',
     price: 79.99,
-    category: 'men',
+    category: 'women',
     image: '/product4.jpg',
   },
   {
     id: '5',
     name: 'Urban T-Shirt',
     price: 39.99,
-    category: 'men',
+    category: 'women',
     image: '/product5.jpg',
   },
   {
