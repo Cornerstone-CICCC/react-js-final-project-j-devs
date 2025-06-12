@@ -32,7 +32,7 @@ export default function Footer() {
           <h4 className="text-lg font-semibold mb-4">Company</h4>
           <ul className="space-y-2">
             <li>
-              <Link href="/" className="text-gray-400 hover:text-white transition">About Us</Link>
+              <Link href="#aboutPage" className="text-gray-400 hover:text-white transition">About Us</Link>
             </li>
           </ul>
         </div>
