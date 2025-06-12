@@ -3,7 +3,7 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import NewArrivals from '../components/NewArrivals';
  
-function Home() {
+export default function Home() {
   return (
     <>
     <Header />
@@ -13,5 +13,3 @@ function Home() {
     </>
   );
 }
-
-export default Home
