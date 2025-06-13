@@ -31,7 +31,7 @@ export default function CartPage() {
       window.location.assign(url);
     } catch (err) {
       console.error(err);
-      toast.error('Error al iniciar Stripe Checkout.');
+      toast.error('Failed to initiate Stripe Checkout.');
     }
   };
 
@@ -40,7 +40,7 @@ return (
     <section className="max-w-4xl mx-auto p-6">
       <Toaster position="bottom-center" />
 
-      {/* Título */}
+    
       <h1 className="text-4xl sm:text-5xl font-bold mb-8 text-center">
         Shopping Cart
       </h1>
@@ -53,23 +53,23 @@ return (
         <>
           <ul className="space-y-6">
             {cart.map((item, index) => (
-              <li
-                key={`${item.product.id}-${item.size}-${index}`}
-                className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4"
-              >
-                {/* Imagen */}
-                <div className="flex-shrink-0 mb-4 sm:mb-0">
-                  <div className="relative w-full h-64 sm:w-40 sm:h-40 overflow-hidden rounded-lg">
-                    <Image
-                      src={item.product.image}
-                      alt={item.product.name}
-                      fill
-                      className="object-cover transition-transform duration-300 hover:scale-110"
-                    />
-                  </div>
-                </div>
+             <li
+  key={`${item.product.id}-${item.size}-${index}`}
+  className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4"
+>
+ 
+  <div className="flex-shrink-0 overflow-hidden rounded-lg mb-4 sm:mb-0 sm:mr-4">
+    <Image
+      src={item.product.image}
+      alt={item.product.name}
+      width={400}
+      height={400}
+      className="w-full h-64 sm:w-40 sm:h-40 object-cover transition-transform duration-300 hover:scale-110"
+      priority
+    />
+  </div>
 
-                {/* Detalles */}
+                
                 <div className="flex-1 mb-4 sm:mb-0 sm:mx-4">
                   <h2 className="font-semibold text-lg sm:text-xl">
                     {item.product.name}
@@ -81,7 +81,7 @@ return (
                   </p>
                 </div>
 
-                {/* Controles: cantidad + eliminar */}
+               
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <div className="flex items-center gap-2">
                     <button
@@ -160,7 +160,7 @@ return (
         </>
       )}
 
-      {/* Continue Shopping */}
+     
       <div className="mt-12 text-center">
         <Link
           href="/products"

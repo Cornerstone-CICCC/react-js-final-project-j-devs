@@ -1,4 +1,6 @@
+// src/types.ts
 export type Product = {
+
   _id: string;
   name: string;
   description: string
@@ -7,3 +9,4 @@ export type Product = {
   image: string;
   material?: string;
 };
+

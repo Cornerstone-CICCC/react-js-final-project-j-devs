@@ -14,5 +14,6 @@ export default async function ProductList() {
         ))}
       </div>
     </section>
+
   );
 }
