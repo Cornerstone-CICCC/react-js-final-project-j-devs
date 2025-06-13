@@ -5,6 +5,7 @@ import '@/styles/components/header.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import LogoutBtn from './LogoutBtn';
 
 function LoginHeader(){
 
@@ -83,9 +84,7 @@ function LoginHeader(){
                     </form>
                     </li>
                     <li>
-                        <form onSubmit={handleSubmit}>
-                            <button>Logout</button>
-                        </form>
+                        <LogoutBtn />
                     </li>
                 </ul>
             </div>
