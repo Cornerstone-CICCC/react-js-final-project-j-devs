@@ -77,12 +77,12 @@ async function Header(){
                         {isSessionOn ? 
                         <LogoutBtn/> :
                         <div className='flex gap-5'>
-                            <li>
+                            <span>
                                 <Link href="/login">Login</Link>
-                            </li>
-                            <li>
+                            </span>
+                            <span>
                                 <Link href="/signup">Signup</Link>
-                            </li>
+                            </span>
                         </div>
                         }
                     </li>
