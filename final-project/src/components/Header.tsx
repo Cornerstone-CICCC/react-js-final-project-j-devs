@@ -78,11 +78,11 @@ async function Header(){
                         <LogoutBtn/> :
                         <div className='flex gap-5'>
                             <li>
-                            <Link href="/login">Login</Link>
-                        </li>
-                        <li>
-                            <Link href="/signup">Signup</Link>
-                        </li>
+                                <Link href="/login">Login</Link>
+                            </li>
+                            <li>
+                                <Link href="/signup">Signup</Link>
+                            </li>
                         </div>
                         }
                     </li>
