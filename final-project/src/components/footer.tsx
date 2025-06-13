@@ -5,7 +5,7 @@ import { MdClose } from 'react-icons/md'
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-black text-white p-4 sm:ml-64"  >
       <div className="px-8 py-12 grid md:grid-cols-3 gap-10 justify-items-center text-center">
         <div className="max-w-xs">
           <h3 className="text-2xl font-bold mb-4">

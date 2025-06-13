@@ -46,7 +46,7 @@ export default function AddProductForm() {
       })
 
       if (res.ok) {
-        router.push("/products")
+        router.refresh()
       } else {
         throw new Error("Product creation failed.")
       }

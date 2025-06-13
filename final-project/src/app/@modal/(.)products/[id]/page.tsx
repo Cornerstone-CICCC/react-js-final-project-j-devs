@@ -7,6 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useCartStore } from '@/store/useCartStore';
 import Image from 'next/image';
 import { Product } from '@/types';
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 export default function ProductModal() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function ProductModal() {
 
   const productId = Array.isArray(params.id) ? params.id[0] : params.id;
   const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [selectedSize, setSelectedSize] = useState('M');
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function ProductModal() {
         toast.error('Failed to load product');
         router.back();
       } finally {
-        setLoading(false);
+        setIsLoaded(false);
       }
     };
 
@@ -52,8 +53,7 @@ export default function ProductModal() {
     toast.success(`Added ${product.name} (${selectedSize}) to cart`);
   };
 
-  if (loading) return <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 text-white">Loading...</div>;
-  if (!product) return null;
+  {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}  if (!product) return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">

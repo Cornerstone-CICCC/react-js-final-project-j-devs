@@ -10,3 +10,5 @@ export type Product = {
   material?: string;
 };
 
+export type Category = Product['category']
+
