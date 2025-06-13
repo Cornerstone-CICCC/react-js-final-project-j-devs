@@ -77,10 +77,8 @@ async function addCustomer (formData: FormData) {
       password: hashedPassword,
       role
     })
-    toast.success("Sign up successfull")
 
-    // Add redirection to login or shop webpage
-    revalidatePath("/")
+    redirect("/login")
   } catch (err) {
     console.error(err)
   }
