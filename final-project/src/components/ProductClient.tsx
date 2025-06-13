@@ -9,11 +9,9 @@ import { useCartStore } from '@/store/useCartStore';
 
 type Props = {
   product: Product;
-  description: string;
-  material: string;
 };
 
-export default function ProductClient({ product, description, material }: Props) {
+export default function ProductClient({ product }: Props) {
   const [selectedSize, setSelectedSize] = useState('M');
   const addToCart = useCartStore((state) => state.addToCart);
 
@@ -31,16 +29,19 @@ export default function ProductClient({ product, description, material }: Props)
           <Image
             src={product.image}
             alt={product.name}
-            width={500}
-            height={500}
+            width={400}
+            height={400}
+
             className="w-full h-auto object-cover transition-transform duration-300 hover:scale-110"
           />
         </div>
 
         <h1 className="text-3xl font-bold">{product.name}</h1>
         <p className="text-2xl text-gray-300 font-semibold">${product.price.toFixed(2)}</p>
-        <p className="text-lg text-gray-400 font-medium max-w-prose">{description}</p>
-        <p className="text-md text-gray-500 font-medium">Material: {material}</p>
+        <p className="text-lg text-gray-400 font-medium max-w-prose">{product.description}</p>
+        <p className="text-md text-gray-500 font-medium">
+          Material: {product.material ?? 'Material not specified'}
+        </p>
 
         <div className="flex gap-4 mt-4">
           {['XS', 'S', 'M', 'L', 'XL'].map((size) => (
@@ -64,6 +65,7 @@ export default function ProductClient({ product, description, material }: Props)
         >
           Add to Cart
         </button>
+
 
         <Link
           href="/cart"

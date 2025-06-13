@@ -45,18 +45,4 @@ export async function POST(req: Request) {
 
 
 
-export async function POST(req: Request) {
-  const { name, price, description, size, image, stock, category } = await req.json()
-  if (!name || !price || !description || !size || !image || !stock || !category) {
-    return NextResponse.json({error: "Please complete all input fields"}, {status: 400})
-  }
 
-  await connectDB()
-  const foundProd = await Product.exists({ name, description })
-  if (foundProd) {
-    return NextResponse.json({error: "Product already in-store"}, {status: 409})
-  }
-
-  const product = await Product.create({ name, price, description, size, image, stock, category })
-  return NextResponse.json(product)
-}
