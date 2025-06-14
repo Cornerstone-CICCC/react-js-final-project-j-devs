@@ -36,6 +36,7 @@ export default function RootLayout({
         {modal}
         
         <Footer />
+        <Toaster position="bottom-left"/>
       </body>
     </html>
   );

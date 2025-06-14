@@ -1,8 +1,12 @@
+import { checkSession } from '@/lib/checkSession';
 import '@/styles/components/header.css';
 
 import Link from 'next/link';
+import LogoutBtn from './LogoutBtn';
 
-function Header(){
+async function Header(){
+    const isSessionOn = await checkSession()
+
     return(
         <>
         {/*Banner */}
@@ -70,10 +74,17 @@ function Header(){
                     </form>
                     </li>
                     <li>
-                        <Link href="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link href="/signup">Signup</Link>
+                        {isSessionOn ? 
+                        <LogoutBtn/> :
+                        <div className='flex gap-5'>
+                            <span>
+                                <Link href="/login">Login</Link>
+                            </span>
+                            <span>
+                                <Link href="/signup">Signup</Link>
+                            </span>
+                        </div>
+                        }
                     </li>
                 </ul>
             </div>

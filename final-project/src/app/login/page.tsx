@@ -1,8 +1,30 @@
+"use client"
 import LoginHeader from "@/components/LoginHeader";
-
 import Link from 'next/link';
+import { useState } from "react";
+import { loginCustomer } from "../actions/customer.actions";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 function Login(){
+
+    const [loading, setLoading] = useState<boolean>(false)
+    const router = useRouter()
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoading(true)
+        const formData = new FormData(e.currentTarget)
+        const result = await loginCustomer(formData)
+        if (result.success) {
+            toast.success(result.message)
+            router.push("../products")
+        } else {
+            toast.error(result.message)
+        }
+        setLoading(false)
+    }
+
     return(
         <>
             <LoginHeader />
@@ -19,7 +41,7 @@ function Login(){
                 </div>
 
                 <div className="w-full md:w-full p-4 bg-white border-t md:border-t-0 md:border-l border-gray-200 rounded-b-lg md:rounded-none md:rounded-e-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <form action="#" className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                     <h5 className="text-xl font-medium text-gray-900 dark:text-white">Welcome back!</h5>
                     {/*Email */}
                     <div>
@@ -43,8 +65,8 @@ function Login(){
                         </div>
                     </div>
 
-                    <button type="submit" className="flex justify-center w-1/2 text-[#204969] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#08ffc8] dark:hover:bg-[#dadada] dark:focus:ring-blue-800">
-                        Login to your account
+                    <button type="submit" disabled={loading} className="text-white font-semibold ease-in-out duration-200 flex justify-center w-1/2 text-[#204969] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#08ffc8] dark:hover:bg-[#dadada] dark:focus:ring-blue-800">
+                        {loading ? "Signing up..." : "Login to your account"}
                     </button>
 
                      <div className="text-sm font-medium text-gray-500 dark:text-[#08ffc8]">

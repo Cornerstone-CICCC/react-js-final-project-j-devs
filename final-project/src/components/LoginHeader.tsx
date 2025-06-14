@@ -1,8 +1,22 @@
+"use client"
+import { logoutCustomer } from '@/app/actions/customer.actions';
 import '@/styles/components/header.css';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React from 'react';
+import LogoutBtn from './LogoutBtn';
 
 function LoginHeader(){
+
+    const router = useRouter()
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        await logoutCustomer(formData)
+        router.push("/")
+    }
     return(
         <>
         {/*Banner */}
@@ -70,7 +84,7 @@ function LoginHeader(){
                     </form>
                     </li>
                     <li>
-                        <Link href="/">Logout</Link>
+                        <LogoutBtn />
                     </li>
                 </ul>
             </div>

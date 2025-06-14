@@ -1,8 +1,36 @@
-import Link from 'next/link';
-
-import LoginHeader from "@/components/LoginHeader";
+'use client'
+import Link from 'next/link'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import LoginHeader from "@/components/LoginHeader"
+import { addCustomer } from '../actions/customer.actions'
+import toast from 'react-hot-toast'
 
 function Signup(){
+
+    const [loading, setLoading] = useState<boolean>(false)
+    const [password, setPassword] = useState<string>('')
+    const [confirmPassword, setConfirmPassword] = useState<string>('')
+    const router = useRouter()
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (password !== confirmPassword) {
+            toast.error("Passwords do not match.")
+            return
+        }
+        setLoading(true)
+        const formData = new FormData(e.currentTarget)
+        const result = await addCustomer(formData)
+        if (result.success) {
+            toast.success(result.message)
+            router.push("../login")
+        } else {
+            toast.error(result.message)
+        }
+        setLoading(false)
+    }
+
     return(
         <>
             <LoginHeader />
@@ -19,19 +47,19 @@ function Signup(){
                 </div>
 
                 <div className="w-full md:w-full p-4 bg-white border-t md:border-t-0 md:border-l border-gray-200 rounded-b-lg md:rounded-none md:rounded-e-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <form action="#" className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                     <h5 className="text-xl font-medium text-gray-900 dark:text-white">Join our Community!</h5>
 
                     {/*First Name */}
                     <div>
                         <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-                        <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your first name" required />
+                        <input type="text" name="firstname" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your first name" required />
                     </div>
 
                     {/*Last Name */}
                     <div>
                         <label htmlFor="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-                        <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your last name" required />
+                        <input type="text" name="lastname" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your last name" required />
                     </div>
 
                     {/*Email */}
@@ -43,14 +71,18 @@ function Signup(){
                     {/*Password */}
                     <div>
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-500 dark:placeholder-gray-400 dark:text-[#204969]" required />
+                        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-500 dark:placeholder-gray-400 dark:text-[#204969]" required />
                      </div>
 
                     {/*Confirm Password */}
                     <div className="mb-6">
                         <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                        <input type="password" id="confirm_password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
+                        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirm_password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#dadada] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#204969] dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
+                        {password && confirmPassword && password !== confirmPassword && (
+                            <p className='text-red-500 font-semibold text-sm mt-1'>Passwords do not match.</p>
+                        )}
                     </div> 
+                    
 
                      {/*Data recover */}
                     <div className="flex items-start">
@@ -62,8 +94,8 @@ function Signup(){
                         </div>
                     </div>
 
-                    <button type="submit" className="flex justify-center w-1/2 text-[#204969] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#08ffc8] dark:hover:bg-[#dadada] dark:focus:ring-blue-800">
-                        Sign up to your account
+                    <button type="submit" disabled={loading} className="text-white font-semibold ease-in-out duration-200 flex justify-center w-1/2 text-[#204969] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#08ffc8] dark:hover:bg-[#dadada] dark:focus:ring-blue-800">
+                        {loading ? "Signing up..." : "Sign up to your account"}
                     </button>
 
                      <div className="text-sm font-medium text-gray-500 dark:text-[#08ffc8]">
