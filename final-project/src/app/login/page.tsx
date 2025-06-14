@@ -12,18 +12,29 @@ function Login(){
     const router = useRouter()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
-        const formData = new FormData(e.currentTarget)
-        const result = await loginCustomer(formData)
+        e.preventDefault();
+        setLoading(true);
+    
+        const formData = new FormData(e.currentTarget);
+        const result = await loginCustomer(formData);
+    
         if (result.success) {
-            toast.success(result.message)
-            router.push("../products")
+            toast.success(result.message);
+    
+            const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "admin@example.com"; // must match .env
+    
+            if (result.user?.email === adminEmail) {
+                router.push("/admin");
+            } else {
+                router.push("/products");
+            }
         } else {
-            toast.error(result.message)
+            toast.error(result.message);
         }
-        setLoading(false)
-    }
+    
+        setLoading(false);
+    };
+    
 
     return(
         <>

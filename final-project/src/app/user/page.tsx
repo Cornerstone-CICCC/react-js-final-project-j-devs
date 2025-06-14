@@ -4,6 +4,8 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
+
 
 interface User {
   name: string;
@@ -12,6 +14,7 @@ interface User {
 
 export default function UserPage() {
   const [user, setUser] = useState<User | null>(null);
+    const router = useRouter()
 
 
   useEffect(() => {
@@ -37,6 +40,7 @@ export default function UserPage() {
     .join('');
 
   const handleSignOut = () => {
+    router.push('/login')
     toast.success('Signed out');
    
   };

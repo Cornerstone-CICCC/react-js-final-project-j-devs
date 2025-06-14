@@ -108,16 +108,26 @@ export async function loginCustomer (formData: FormData) {
     cookieStore.set("admin", "true", {
       httpOnly: true,
       secure: true,
-      path: '/',
+      path: '/admin',
     }) 
   }
 
-  return { success: true, message: "Logged In!" }
+  return { 
+    success: true, 
+    message: "Logged In!", 
+    user: { 
+      email: foundCustomer.email 
+    } 
+  }
 }
 
-export async function logoutCustomer (formData: FormData) {
+export async function logoutCustomer () {
   const cookieStore = await cookies()
   cookieStore.delete("logged")
+  revalidatePath("/login")
+  redirect("/login");
+
+
 }
   
 // Delete Customer
